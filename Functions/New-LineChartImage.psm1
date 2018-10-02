@@ -1,4 +1,4 @@
-Function Invoke-LineChartImage{
+Function New-LineChartImage{
     [cmdletbinding()]
     param(
         [parameter(Mandatory=$True,ValueFromPipeline=$True)]
@@ -11,7 +11,7 @@ Function Invoke-LineChartImage{
         [String]$Color,
         [Switch]$Legend,
         [String]$LegendTitle,
-        [String]$LegendText
+        [String[]]$LegendText
     )
 
     Begin {
@@ -79,6 +79,7 @@ Function Invoke-LineChartImage{
         $ChartArea.AxisX.LabelStyle.Angle = -90
         $chartarea.AxisX.IsLabelAutoFit = $False
         $ChartArea.AxisX.IsMarginVisible = $False
+        #$ChartArea.AxisY2.Enabled = [System.Windows.Forms.DataVisualization.charting.AxisEnabled]::True
         $ChartArea.AxisX.LineColor = [System.Drawing.ColorTranslator]::FromHtml("#d5dbdb")
         $ChartArea.AxisY.LineColor = [System.Drawing.ColorTranslator]::FromHtml("#d5dbdb")
         $ChartArea.AxisX.MajorGrid.LineColor = [System.Drawing.ColorTranslator]::FromHtml("#d5dbdb")
@@ -89,25 +90,52 @@ Function Invoke-LineChartImage{
 
         ## Add Legend
         If( $PSBoundParameters['Legend'].isPresent ) {
-            $legend = New-Object -TypeName system.Windows.Forms.DataVisualization.Charting.Legend
-            $legend.name = "Legend1"
-            $legend.LegendStyle = "Table"
-            $legend.Alignment  = "Center"
-            $legend.Title = $PSBoundParameters['LegendTitle']
-            $legend.TitleAlignment = "Near"
+            $ChartLegend = New-Object -TypeName system.Windows.Forms.DataVisualization.Charting.Legend
+            $ChartLegend.name = "Legend1"
+            $ChartLegend.LegendStyle = "Table"
+            $ChartLegend.Alignment  = "Center"
+            $ChartLegend.Title = $PSBoundParameters['LegendTitle']
+            $ChartLegend.TitleAlignment = "Near"
 
-            $chart.Legends.Add($legend)
+            $chart.Legends.Add($ChartLegend)
 
             $chart.Legends["Legend1"].docking = "Bottom"
         }
 
         ## counter variable
         $counter = 0
+
+        ## Color Palette
+        $CustomColorPalette = `
+        [System.Drawing.ColorTranslator]::FromHtml("#e74c3c"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#9b59b6"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#3498db"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#16a085"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#2ecc71"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#f39c12"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#d35400"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#7f8c8d"),` #gris
+        [System.Drawing.ColorTranslator]::FromHtml("#d2b4de"),` #violet clair
+        [System.Drawing.ColorTranslator]::FromHtml("#bdc3c7"),` #gris un peu plus clair
+        [System.Drawing.ColorTranslator]::FromHtml("#0e6251"),` #marron.
+        [System.Drawing.ColorTranslator]::FromHtml("#34495e"),` #gris bleu
+        [System.Drawing.ColorTranslator]::FromHtml("#edbb99"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#f1c40f"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#abebc6"),` #vert clair 'pop'
+        [System.Drawing.ColorTranslator]::FromHtml("#196f3d"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#73c6b6"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#aed6f1"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#5f6a6a"),` #gris foncé
+        [System.Drawing.ColorTranslator]::FromHtml("#154360"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#f5b7b1"),`
+        [System.Drawing.ColorTranslator]::FromHtml("#922b21")
     }
 
     Process {
         
         Foreach ( $DataSerie in $Hash ) {
+            ## Random Color
+            $RandomColor = (get-random $CustomColorPalette)
 
             ## Dynamic Serie Name
             $SeriesName = "Data$Counter"
@@ -121,11 +149,15 @@ Function Invoke-LineChartImage{
             $Chart.Series[$SeriesName]["LineTension"] = "0.295"
             $Chart.Series[$SeriesName].label = "#VALY"
             $Chart.Series[$SeriesName]["LabelStyle"] = "Top"
-            $Chart.Series[$SeriesName].Color = [System.Drawing.ColorTranslator]::FromHtml($PSBoundParameters['Color'])
-            $Chart.Series[$SeriesName].LegendText = $PSBoundParameters['LegendText']
+            #$Chart.Series[$SeriesName].Color = [System.Drawing.ColorTranslator]::FromHtml($PSBoundParameters['Color'])
+            $Chart.Series[$SeriesName].Color = $RandomColor
+            
+            $Chart.Series[$SeriesName].LegendText = $PSBoundParameters['LegendText'][$counter]
+
             $Chart.Series[$SeriesName].MarkerSize = 10
             $Chart.Series[$SeriesName].MarkerStyle = [System.Windows.Forms.DataVisualization.Charting.MarkerStyle]::Star4
-            $Chart.Series[$SeriesName].MarkerColor = [System.Drawing.ColorTranslator]::FromHtml($PSBoundParameters['Color'])
+            #$Chart.Series[$SeriesName].MarkerColor = [System.Drawing.ColorTranslator]::FromHtml($PSBoundParameters['Color'])
+            $Chart.Series[$SeriesName].MarkerColor = $RandomColor
             $Chart.Series[$SeriesName].MarkerBorderColor = [System.Drawing.ColorTranslator]::FromHtml("#616161")
 
             $counter++
