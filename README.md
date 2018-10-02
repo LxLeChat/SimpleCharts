@@ -12,6 +12,6 @@ $OrderedHashtable1,$OrderedHashtable2,$OrderedHashtable3 | New-LineChartImage -P
 ```
 
 -png result
-![Image of New-LineChartImage](Invoke-Charts/LineChartFromThePipeLine.png)
+![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/LineChartFromThePipeLine.png)
 
 
