@@ -1,21 +1,51 @@
-Function Invoke-PieChartImage{
+Function New-PieChartImage{
     param(
         [parameter(Mandatory=$True)]
-        [ValidateScript({If($_.gettype().toString() -eq "System.Collections.Hashtable"){$True}Else{Throw "You must provide an ordered HashTable, `$hash=@{""a""=1;""b""=2} "}})]
+        [ValidateScript({If($_.gettype().toString() -eq "System.Collections.Hashtable"){$True}Else{Throw "You must provide a HashTable, `$hash=@{""a""=1;""b""=2} "}})]
         [Hashtable]$Hash,
-        [String]$Titre        = "Default",
-        [String]$TitreLegende,
         [ValidateScript({[System.IO.Directory]::Exists(([System.IO.FileInfo]$_).Directory.FullName)})]
-        [String]$Path         = "C:\temp\getpiechartimage.png",
+        [String]$Path,
+        [int]$Width,
+        [int]$Height,
+        [String]$Title,
+        [String]$LegendTitle,
         [String]$Unite,
-        [int]$Radius          = 90,
-        [int]$StartAngle      = 0,
-        [string]$DrawingStyle = "Default",
-        [int]$Width           = 400,
-        [int]$Height          = 400,
+        [int]$Radius,
+        [int]$StartAngle,
+        [string]$DrawingStyle,
         [switch]$ThreeDimension
     )
-    
+
+    ## Test & Define default value For Width
+    If ( $null -eq $PSBoundParameters['Title'] ) {
+        $PSBoundParameters.Add('Title','Default')
+    }
+
+    ## Test & Define default value For Width
+    If ( $null -eq $PSBoundParameters['Width'] ) {
+        $PSBoundParameters.Add('Width',400)
+    }
+
+    ## Test & Define default value For Height
+    If ( $null -eq $PSBoundParameters['Height'] ) {
+        $PSBoundParameters.Add('Height',400)
+    }
+
+    ## Test & Define default value For Height
+    If ( $null -eq $PSBoundParameters['Radius'] ) {
+        $PSBoundParameters.Add('Radius',90)
+    }
+
+    ## Test & Define default value For Height
+    If ( $null -eq $PSBoundParameters['StartAngle'] ) {
+        $PSBoundParameters.Add('StartAngle',0)
+    }
+
+    ## Test & Define default value For Height
+    If ( $null -eq $PSBoundParameters['DrawingStyle'] ) {
+        $PSBoundParameters.Add('DrawingStyle','Default')
+    }
+
     ## Load necessary assemblies 
     [void][Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
     [void][Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms.DataVisualization")
@@ -55,8 +85,8 @@ Function Invoke-PieChartImage{
  
     $Chart.PaletteCustomColors = ($CustomColorPalette)
 
-    ## Titre
-    [void]$chart.Titles.Add($PSBoundParameters["Titre"])
+    ## Title
+    [void]$chart.Titles.Add($PSBoundParameters["Title"])
     $Chart.Titles["Title1"].alignment = "TopCenter"
 
     ## Create a ChartArea to draw on and add to chart
@@ -79,7 +109,7 @@ Function Invoke-PieChartImage{
     $legend.name                      = "Legend1"
     $legend.LegendStyle               = "Table"
     $legend.Alignment                 = "Center"
-    $legend.Title                     = $PSBoundParameters["TitreLegende"]
+    $legend.Title                     = $PSBoundParameters["LegendTitle"]
     $legend.TitleAlignment            = "Near"
     $chart.Legends.Add($legend)
     $chart.Legends["Legend1"].docking = "Bottom"
@@ -103,3 +133,7 @@ Function Invoke-PieChartImage{
     ## Save chart as image
     $Chart.SaveImage($PSBoundParameters["path"],"png")
 }
+
+
+$hash = @{'a'=12;'b'=150;'x'=71}
+Invoke-PieChartImage -Hash $hash -Titre "Title" -TitreLegende "Legend" -Path $PWD\test.png -Unite 'patates' -ThreeDimension -Radius 99

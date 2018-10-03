@@ -15,3 +15,15 @@ $OrderedHashtable1,$OrderedHashtable2,$OrderedHashtable3 | New-LineChartImage -P
 ![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/LineChartFromThePipeLine.png)
 
 
+# New-PieChartImage
+-New-LineChartImage, usage example(s):
+```powershell
+New-PieChartImage -Hash $hash -Titre "Title" -TitreLegende "Legend" -Path $PWD\PieChartExample1.png -Unite 'patates' -ThreeDimension -Radius 99
+```
+```powershell
+New-PieChartImage -Hash $hash -Titre "Title" -TitreLegende "Legend" -Path $PWD\PieChartExample2.png -Unite 'patates' -ThreeDimension -Radius 25
+```
+
+![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample1.png)
+![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample2.png)
+
