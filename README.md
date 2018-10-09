@@ -1,4 +1,4 @@
-# Invoke-Charts
+# SimpleCharts
 Basic Charting functions for Powershell.
 Create png files
 You provide, one or more Ordered Hashtable
