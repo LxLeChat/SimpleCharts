@@ -41,7 +41,7 @@ New-PieChartImage -Hash $HashTable -Titre "Title" -TitreLegende "Legend" -Path $
 ![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample1.png)
 ![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample2.png)
 
-# Fairly complicated example :)
+# Fairly long example:
 Lets say you want to render your disk size as pie chart and you want to save this in a png file.. (i know, i know..)
 Let's first grab your disk size from wmi and transform the data in a human comprehensible way.. Charts, to my knowledge accepts only ints, no double, that's why i rounded freespace and usedspace to 0:
 ```powershell
@@ -64,8 +64,9 @@ We know have the DiskData variable we can feed to New-PieChartImage
 ```powershell
 New-PieChartImage -Hash $DiskData -Title "$($a.DeviceId) Size Report, size: $($a.TotalSize) GB" -Unite ' Gb' -Path $PWD\disk_c.png -Radius 99
 ```
+And voila!
 ![DiskSize](https://github.com/LxLeChat/SimpleCharts/blob/master/disk_c.png)
-And voila
+
 # Note(s)
 - Colors are randomly picked. Maybe i can find a way to make sure it's picked in a certain order.
 - I personally using these functions to created daily mail report.
