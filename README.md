@@ -41,6 +41,31 @@ New-PieChartImage -Hash $HashTable -Titre "Title" -TitreLegende "Legend" -Path $
 ![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample1.png)
 ![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample2.png)
 
+# Fairly complicated example :)
+Lets say you want to render your disk size as pie chart and you want to save this in a png file.. (i know, i know..)
+Let's first grab your disk size from wmi and transform the data in a human comprehensible way.. Charts, to my knowledge accepts only ints, no double, that's why i rounded freespace and usedspace to 0:
+```powershell
+$a = get-WmiObject win32_logicaldisk | select deviceid,@{l='TotalSize';e={[Math]::Round($($_.size/1GB),0)}},@{l='FreeSpace';e={[Math]::Round($($_.freespace/1GB),0)}},@{l='UsedSpace';e={[Math]::Round((($_.size-$_.freespace)/1gb),0)}}
+
+deviceid TotalSize FreeSpace UsedSpace
+-------- --------- --------- ---------
+C:             464       390        74
+```
+Now me must create a new hashtable (not ordered since we will be outputing a PIE) containing the UsedSpace and FreeSpace
+```powershell
+$DiskData = @{FreeSpace=[int]$($a.FreeSpace);UsedSpace=[int]$($a.UsedSpace)}
+
+Name                           Value                               
+----                           -----                               
+UsedSpace                      74                              
+FreeSpace                      390
+```
+We know have the DiskData variable we can feed to New-PieChartImage
+```powershell
+New-PieChartImage -Hash $DiskData -Title "$($a.DeviceId) Size Report, size: $($a.TotalSize) GB" -Unite ' Gb' -Path $PWD\disk_c.png -Radius 99
+```
+![DiskSize](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample2.png)
+And voila
 # Note(s)
 - Colors are randomly picked. Maybe i can find a way to make sure it's picked in a certain order.
 - I personally using these functions to created daily mail report.
