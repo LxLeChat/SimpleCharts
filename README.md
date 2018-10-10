@@ -25,8 +25,14 @@ $OrderedHashtable1,$OrderedHashtable2,$OrderedHashtable3 | New-LineChartImage -P
 
 # New-PieChartImage
 -New-LineChartImage, usage example(s):
+
+Create a hashtable containing your key/value pair
 ```powershell
-New-PieChartImage -Hash $hash -Titre "Title" -TitreLegende "Legend" -Path $PWD\PieChartExample1.png -Unite 'patates' -ThreeDimension -Radius 99
+$HashTable = @{a=12;b=150;x=71}
+```
+Then pass the hashtable to the -Hash parameter, use the -Unite parameter to describe your data. Using the -Radius parameter, or using the -ThreeDimension switch will change the look of the resuling pie chart.
+```powershell
+New-PieChartImage -Hash $HashTable -Titre "Title" -TitreLegende "Legend" -Path $PWD\PieChartExample1.png -Unite 'patates' -ThreeDimension -Radius 99
 ```
 ```powershell
 New-PieChartImage -Hash $hash -Titre "Title" -TitreLegende "Legend" -Path $PWD\PieChartExample2.png -Unite 'patates' -ThreeDimension -Radius 25
