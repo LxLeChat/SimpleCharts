@@ -5,6 +5,7 @@ You provide, one or more Ordered Hashtable
 
 # New-LineChartImage
 -New-LineChartImage, usage example(s):
+
 Create 3 ordered Hashtables, for coherence, keys should be the same accros hashtables.
 ```powershell
 $OrderedHashtable1 = [Ordered]@{a=3;b=8;c=6}
