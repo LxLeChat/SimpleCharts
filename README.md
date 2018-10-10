@@ -11,7 +11,7 @@ $OrderedHashtable1 = [Ordered]@{a=3;b=8;c=6}
 $OrderedHashtable2 = [Ordered]@{a=5;b=2;c=10}
 $OrderedHashtable3 = [Ordered]@{a=3;b=12}
 ```
-Then pass the three hastables to the New-LineCHartImage
+Then pass the three hastables to the New-LineCHartImage by using the -Hash parameter, or by using the pipeline (second example)
 ```powershell
 New-LineChartImage -Path $pwd\LineChartFromThePipeLine.png -Hash $OrderedHashtable1,$OrderedHashtable2,$OrderedHashtable3 -Title 'I am a Title' -Legend -LegendTitle 'I am a LegendTitle' -LegendText 'FirstHash','SecondHash','ThirdHash'
 ```
