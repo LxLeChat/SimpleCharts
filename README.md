@@ -64,7 +64,7 @@ We know have the DiskData variable we can feed to New-PieChartImage
 ```powershell
 New-PieChartImage -Hash $DiskData -Title "$($a.DeviceId) Size Report, size: $($a.TotalSize) GB" -Unite ' Gb' -Path $PWD\disk_c.png -Radius 99
 ```
-![DiskSize](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample2.png)
+![DiskSize](https://github.com/LxLeChat/SimpleCharts/blob/master/disk_c.png)
 And voila
 # Note(s)
 - Colors are randomly picked. Maybe i can find a way to make sure it's picked in a certain order.
