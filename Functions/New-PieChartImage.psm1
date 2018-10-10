@@ -133,7 +133,3 @@ Function New-PieChartImage{
     ## Save chart as image
     $Chart.SaveImage($PSBoundParameters["path"],"png")
 }
-
-
-$hash = @{'a'=12;'b'=150;'x'=71}
-Invoke-PieChartImage -Hash $hash -Titre "Title" -TitreLegende "Legend" -Path $PWD\test.png -Unite 'patates' -ThreeDimension -Radius 99
