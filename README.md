@@ -30,6 +30,24 @@ Create a hashtable containing your key/value pair
 ```powershell
 $HashTable = @{a=12;b=150;x=71}
 ```
+You can create a more complex hashtable, to specify the exact color of each data point. For that you the value for each key, must be a hastable, with the following key/value pair: ```powershell @{color=[system.drawing.color];point=[int]}```
+```powershell
+$MoreCompleHashtable = @{
+  a = @{
+    color = [System.Drawing.ColorTranslator]::FromHtml("#34495e")
+    point = 12
+  }
+  b = @{
+    color = [System.Drawing.ColorTranslator]::FromHtml("#abebc6")
+    point = 150
+  }
+  x = @{
+    color =[System.Drawing.ColorTranslator]::FromHtml("#922b21")
+    point = 71
+  }
+}
+```
+
 Then pass the hashtable to the -Hash parameter, use the -Unite parameter to describe your data. Using the -Radius parameter, or using the -ThreeDimension switch will change the look of the resuling pie chart. The below command will generate .png file in your current directory
 ```powershell
 New-PieChartImage -Hash $HashTable -Titre "Title" -TitreLegende "Legend" -Path $PWD\PieChartExample1.png -Unite 'patates' -ThreeDimension -Radius 99
