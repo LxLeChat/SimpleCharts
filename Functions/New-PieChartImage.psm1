@@ -59,6 +59,8 @@ Function New-PieChartImage{
     
     ## Configure Color Palette
     $Chart.Palette      = "None"
+    [System.Drawing.ColorTranslator]::FromHtml("#abebc6")
+    [System.Drawing.ColorTranslator]::FromHtml("#e74c3c")
     $CustomColorPalette = `
     [System.Drawing.ColorTranslator]::FromHtml("#e74c3c"),`
     [System.Drawing.ColorTranslator]::FromHtml("#9b59b6"),`
@@ -78,7 +80,7 @@ Function New-PieChartImage{
     [System.Drawing.ColorTranslator]::FromHtml("#196f3d"),`
     [System.Drawing.ColorTranslator]::FromHtml("#73c6b6"),`
     [System.Drawing.ColorTranslator]::FromHtml("#aed6f1"),`
-    [System.Drawing.ColorTranslator]::FromHtml("#5f6a6a"),` #gris foncé
+    [System.Drawing.ColorTranslator]::FromHtml("#5f6a6a"),` #gris fonc�
     [System.Drawing.ColorTranslator]::FromHtml("#154360"),`
     [System.Drawing.ColorTranslator]::FromHtml("#f5b7b1"),`
     [System.Drawing.ColorTranslator]::FromHtml("#922b21")
@@ -117,18 +119,42 @@ Function New-PieChartImage{
     ## Add data to chart
     [void]$Chart.Series.Add("Data")
     
-    $Chart.Series["Data"].Points.DataBindXY($PSBoundParameters["hash"].Keys, $PSBoundParameters["hash"].Values)
+    ### $x = @{a=@{point=12;color=[System.Drawing.ColorTranslator]::FromHtml("#3ce74c")}}
+
+    ## If the input hashtable contains  2 properties for a give key..., else use normal behavior
+    ## To fix the color use the above example, and make sure the inner properties are named 'color' and 'point'
+    If ( ($PSBoundParameters["hash"].GetEnumerator() | select-object -first 1).value.count -eq 2 ) {
+
+        Foreach ( $Point in $PSBoundParameters["hash"].GetEnumerator() ) {
+            
+            $NewDataPoint = New-Object -TypeName System.Windows.Forms.DataVisualization.Charting.DataPoint
+            $NewDataPoint.SetValueXY( $Point.Name, $Point.Value['point'])
+            $NewDataPoint.Color = $Point.Value['color']
+            $Chart.Series["Data"].Points.Add($NewDataPoint)
+
+        }
+        $Chart.Series["Data"].LegendText = "#AXISLABEL"
+
+    } Else {
+
+        $Chart.Series['Data'].Points.DataBindXY($PSBoundParameters['hash'].Keys, $PSBoundParameters['hash'].Values)
+        $Chart.Series["Data"].LegendText = "#VALX"
+        
+    }
+
     $Chart.Series["Data"].ChartType          = [System.Windows.Forms.DataVisualization.Charting.SeriesChartType]::Doughnut
     $Chart.Series["Data"]["PieLabelStyle"]   = "Outside"
     $Chart.Series["Data"]["DoughnutRadius"]  = $PSBoundParameters["Radius"]
     $Chart.Series["Data"]["PieDrawingStyle"] = $PSBoundParameters["DrawingStyle"]
     $Chart.Series["Data"]["PieStartAngle"]   = $PSBoundParameters["StartAngle"]
     $Chart.Series["Data"].label              = "#VALY$($PSBoundParameters["unite"])"
-    $Chart.Series["Data"].LegendText         = "#VALX"
+    
     $Chart.Series["Data"]["PieLineColor"]    = "Black"
     $Chart.Series["Data"]["3DLabelLineSize"] = 31
     $Chart.Series["Data"].BorderColor        = [System.Drawing.ColorTranslator]::FromHtml("#d5dbdb")
     $Chart.Series["Data"].BorderColor        = 0
+
+    #Return $Chart
 
     ## Save chart as image
     $Chart.SaveImage($PSBoundParameters["path"],"png")
