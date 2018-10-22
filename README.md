@@ -30,7 +30,19 @@ Create a hashtable containing your key/value pair
 ```powershell
 $HashTable = @{a=12;b=150;x=71}
 ```
-You can create a more complex hashtable, to specify the exact color of each data point. For that you the value for each key, must be a hastable, with the following key/value pair: ```powershell @{color=[system.drawing.color];point=[int]}```
+
+Then pass the hashtable to the -Hash parameter, use the -Unite parameter to describe your data. Using the -Radius parameter, or using the -ThreeDimension switch will change the look of the resuling pie chart. The below command will generate .png file in your current directory
+```powershell
+New-PieChartImage -Hash $HashTable -Title "Title" -LegendTile "Legend" -Path $PWD\PieChartExample1.png -Unite 'patates' -ThreeDimension -Radius 99
+```
+```powershell
+New-PieChartImage -Hash $HashTable -Title "Title" -LegendTile "Legend" -Path $PWD\PieChartExample2.png -Unite 'patates' -ThreeDimension -Radius 25
+```
+
+![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample1.png)
+![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample2.png)
+
+You can create a more complex hashtable, to specify the exact color of each data point. For each key, you must providea hastable, with the following key/value pair: ```powershell @{color=[system.drawing.color];point=[int]}```
 ```powershell
 $MoreCompleHashtable = @{
   a = @{
@@ -47,17 +59,7 @@ $MoreCompleHashtable = @{
   }
 }
 ```
-
-Then pass the hashtable to the -Hash parameter, use the -Unite parameter to describe your data. Using the -Radius parameter, or using the -ThreeDimension switch will change the look of the resuling pie chart. The below command will generate .png file in your current directory
-```powershell
-New-PieChartImage -Hash $HashTable -Titre "Title" -TitreLegende "Legend" -Path $PWD\PieChartExample1.png -Unite 'patates' -ThreeDimension -Radius 99
-```
-```powershell
-New-PieChartImage -Hash $HashTable -Titre "Title" -TitreLegende "Legend" -Path $PWD\PieChartExample2.png -Unite 'patates' -ThreeDimension -Radius 25
-```
-
-![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample1.png)
-![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample2.png)
+Make sure the you use "color" and "point"!
 
 # Fairly long example:
 Lets say you want to render your disk size as pie chart and you want to save this in a png file.. (i know, i know..)
