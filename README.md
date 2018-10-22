@@ -3,7 +3,7 @@ Basic Charting functions for Powershell.
 Create png files
 You provide, one or more Ordered Hashtable
 
-# Recenty Added feature
+# Recently Added feature(s)
 You can now specify the exact colors you want to use for your datas points. Presently for the New-PieChartImage. See examples below.
 
 # New-LineChartImage
