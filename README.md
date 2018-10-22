@@ -6,6 +6,9 @@ You provide, one or more Ordered Hashtable
 # Recently Added feature(s)
 You can now specify the exact colors you want to use for your datas points. Presently for the New-PieChartImage. See examples below.
 
+# Future Feature(s)
+- Add posibility to specify the exact color for lines charts. Just like for the pie chart.
+
 # New-LineChartImage
 -New-LineChartImage, usage example(s):
 
