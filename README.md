@@ -42,8 +42,7 @@ New-PieChartImage -Hash $HashTable -Title "Title" -LegendTile "Legend" -Path $PW
 ![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample1.png)
 ![Image of New-LineChartImage](https://github.com/LxLeChat/Invoke-Charts/blob/master/PieChartExample2.png)
 
-You can create a more complex hashtable, to specify the exact color of each data point. For each key, you must providea hastable, with the following key/value pair: ```@{color=[system.drawing.color];point=[int]}
-```
+You can create a more complex hashtable, to specify the exact color of each data point. For each key, you must providea hastable, with the following key/value pair: ```@{color=[system.drawing.color];point=[int]}```
 ```powershell
 $MoreCompleHashtable = @{
   a = @{
