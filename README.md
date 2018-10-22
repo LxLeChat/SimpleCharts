@@ -8,6 +8,8 @@ You can now specify the exact colors you want to use for your datas points. Pres
 
 # Future Feature(s)
 - Add posibility to specify the exact color for lines charts. Just like for the pie chart.
+- Provide comment base help like mentionned in the issues.
+- Reorganise the module, create a psm1 and psd1 file..
 
 # New-LineChartImage
 -New-LineChartImage, usage example(s):
