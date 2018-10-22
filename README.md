@@ -91,5 +91,5 @@ And voila!
 ![DiskSize](https://github.com/LxLeChat/SimpleCharts/blob/master/disk_c.png)
 
 # Note(s)
-- ~~Colors are randomly picked. Maybe i can find a way to make sure it's picked in a certain order.
+- ~~Colors are randomly picked. Maybe i can find a way to make sure it's picked in a certain order.~~
 - I personally using these functions to created daily mail report.
