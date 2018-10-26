@@ -1,4 +1,21 @@
 Function New-PieChartImage{
+    <#
+    .SYNOPSIS
+        Generate a Pie Chart image file.
+    .DESCRIPTION
+        Generate a Pie Chart image file.
+    .EXAMPLE
+        PS C:\> $HashTable = @{a=12;b=150;x=71}
+        PS C:\> New-PieChartImage -Hash $HashTable -Title "Title" -LegendTile "Legend" -Path $PWD\PieChartExample1.png -Unite 'patates' -ThreeDimension -Radius 99
+        Create a hashtable. Generates a Pie chart image named PieChartExample1.png in the currentd path.
+    .INPUTS
+        System.Collections.Hashtable
+    .OUTPUTS
+        PNG file.
+    .NOTES
+        Feel free to contribute, fork, create issues etc...
+        https://github.com/LxLeChat/SimpleCharts
+    #>
     param(
         [parameter(Mandatory=$True)]
         [ValidateScript({If($_.gettype().toString() -eq "System.Collections.Hashtable"){$True}Else{Throw "You must provide a HashTable, `$hash=@{""a""=1;""b""=2} "}})]

@@ -1,4 +1,24 @@
 Function New-LineChartImage{
+    <#
+    .SYNOPSIS
+        Generate a Line Chart image file.
+    .DESCRIPTION
+        Generate a Line Chart image file.
+    .EXAMPLE
+        PS C:\> $OrderedHashtable1 = [Ordered]@{a=3;b=8;c=6}
+        PS C:\> $OrderedHashtable2 = [Ordered]@{a=5;b=2;c=10}
+        PS C:\> $OrderedHashtable3 = [Ordered]@{a=3;b=12}
+        PS C:\> New-LineChartImage -Path $pwd\LineChartFromThePipeLine.png -Hash $OrderedHashtable1,$OrderedHashtable2,$OrderedHashtable3 -Title 'I am a Title' -Legend -LegendTitle 'I am a LegendTitle' -LegendText 'FirstHash','SecondHash','ThirdHash'
+        Create 3 ordered hashtable, with the same keys order. Generates a linechart image named LineChartFromPipeline.png in the currentd path.
+    .INPUTS
+        System.Collections.Specialized.OrderedDictionary
+    .OUTPUTS
+        PNG file.
+    .NOTES
+        Feel free to contribute, fork, create issues etc...
+        https://github.com/LxLeChat/SimpleCharts
+    #>
+
     [cmdletbinding()]
     param(
         [parameter(Mandatory=$True,ValueFromPipeline=$True)]
